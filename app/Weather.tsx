@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import { WeatherAPI } from "./type";
 import CurrentLocationWeatherComponent from "./CurrentLocationWeatherComponent";
-import ForecastHourComponent from "./ ForecastHourComponent";
+import ForecastHourComponent from "./ForecastHourComponent";
 import Astro from "./Astro";
 export default function Weather() {
   const [weather, setWeather] = useState<WeatherAPI | null>(null);
@@ -84,12 +84,20 @@ export default function Weather() {
       flex: 1,
       backgroundColor: backgroundColor ? backgroundColor : backgroundColorTheme.sunny,
     },
+
+    astro: {
+      padding: 20,
+      flexDirection: 'row',
+      columnGap: 25,
+    }
   });
   return (
     <SafeAreaView style={styles.container}>
       <CurrentLocationWeatherComponent weatherAPI={weather} />
       <ForecastHourComponent weatherAPI={weather} />
-      <Astro weatherAPI={weather} />
+      <View  style={styles.astro}>
+        <Astro weatherAPI={weather} />
+      </View>
     </SafeAreaView>
   );
 }

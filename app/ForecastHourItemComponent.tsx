@@ -8,19 +8,19 @@ function ForecastItemHourComponent(props: {
     return (
         <View style={styles.container}>
             <Text style= {styles.fontColor}>{props.forecast.time}</Text>
-            <Text style= {styles.fontColor}>{props.forecast.tempC}{'\u00B0'}C</Text>
-            <Text style= {styles.fontColor}>{props.forecast.text}</Text>
+            {/* <Text style= {styles.fontColor}>{props.forecast.text}</Text> */}
             <Image style={styles.icon}
             source={{
                 uri:"https:"+ props.forecast.icon,
             }}/>
+            <Text style= {styles.fontColor}>{props.forecast.tempC}{'\u00B0'}C</Text>
         </View>
       );
 }
 const styles = StyleSheet.create({
   icon: {
-    width: 40,
-    height: 40,
+    width: 35,
+    height: 35,
   },
   container: {
     alignItems:'center',
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   fontColor: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: 'bold'
   }
 });
