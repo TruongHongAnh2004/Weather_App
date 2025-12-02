@@ -95,7 +95,7 @@ export default function Weather() {
     <SafeAreaView style={styles.container}>
       <CurrentLocationWeatherComponent weatherAPI={weather} />
       <ForecastHourComponent weatherAPI={weather} />
-      <View  style={styles.astro}>
+      <View style={styles.astro}>
         <Astro weatherAPI={weather} />
       </View>
     </SafeAreaView>

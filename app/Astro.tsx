@@ -17,7 +17,7 @@ function Astro(props: { weatherAPI: WeatherAPI | null }) {
     },
 
     sunriseTittle: {
-      color: 'white',
+      // color: 'white',
       fontSize: 15
     },
 
@@ -26,11 +26,12 @@ function Astro(props: { weatherAPI: WeatherAPI | null }) {
       fontSize: 10
 
     }
+
   });
 
   return (
     <View style={styles.container}>
-      <Text style={styles.sunriseTittle}>MẶT TRỜI MỌC</Text>
+      <Text className="text-white">MẶT TRỜI MỌC</Text>
       <Text style={styles.sunrise}>{props.weatherAPI?.sunrise}</Text>
       <Text style={styles.sunset}>Mặt trời lặn: {props.weatherAPI?.sunset}</Text>
       {/* <Text style={styles.fontWhite}>Moon Rise: {props.weatherAPI?.moonrise}</Text> */}
