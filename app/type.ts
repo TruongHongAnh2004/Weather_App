@@ -8,6 +8,10 @@ export interface WeatherAPI {
     sunset: string,
     moonrise: string,
     moon_phase: string,
+    windMph: number,
+    windKph: number,
+    windDir: string, 
+    windDegree: number,
     forecast: Forecast[]    
 }
 

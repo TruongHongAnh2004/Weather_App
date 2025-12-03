@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     columnGap: 25,
-    
     overflowY: "hidden",
     width: "100%",
     
@@ -41,7 +40,8 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     borderBottomWidth: 1,
     borderBottomColor: 'white',
-    marginBottom: 10
+    marginBottom: 10,
+    
   }
 });
 

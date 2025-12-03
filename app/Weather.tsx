@@ -5,6 +5,7 @@ import { WeatherAPI } from "./type";
 import CurrentLocationWeatherComponent from "./CurrentLocationWeatherComponent";
 import ForecastHourComponent from "./ForecastHourComponent";
 import Astro from "./Astro";
+import Wind from "./Wind";
 export default function Weather() {
   const [weather, setWeather] = useState<WeatherAPI | null>(null);
   const [backgroundColor, setBackgroundColor] = useState<string | null>(null);
@@ -19,11 +20,15 @@ export default function Weather() {
           tempC: Number(data.current.temp_c),
           text: String(data.current.condition.text),
           icon: String(data.current.condition.icon),
-          last_updated: String(data.current.last_updated.slice(0,10)),
+          last_updated: String(data.current.last_updated.slice(0, 10)),
           sunrise: String(data.forecast.forecastday[0].astro.sunrise),
           sunset: String(data.forecast.forecastday[0].astro.sunset),
           moonrise: String(data.forecast.forecastday[0].astro.moonrise),
           moon_phase: String(data.forecast.forecastday[0].astro.moon_phase),
+          windMph: Number(data.current.wind_mph),
+          windKph: Number(data.current.wind_kph),
+          windDir: String(data.current.wind_dir),
+          windDegree: Number(data.current.wind_degree),
           forecast: data.forecast.forecastday[0].hour.map(function (hour: any) {
             return {
               time: hour.time.slice(11),
@@ -82,21 +87,31 @@ export default function Weather() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: backgroundColor ? backgroundColor : backgroundColorTheme.sunny,
+      backgroundColor: backgroundColor
+        ? backgroundColor
+        : backgroundColorTheme.sunny,
     },
 
     astro: {
       padding: 20,
-      flexDirection: 'row',
+      flexDirection: "row",
       columnGap: 25,
+    },
+
+    wind: {
+      padding: 20,
+      
     }
   });
   return (
     <SafeAreaView style={styles.container}>
       <CurrentLocationWeatherComponent weatherAPI={weather} />
       <ForecastHourComponent weatherAPI={weather} />
-      <View  style={styles.astro}>
+      <View style={styles.astro}>
         <Astro weatherAPI={weather} />
+      </View>
+      <View style={styles.wind}>
+        <Wind weatherAPI={weather} />
       </View>
     </SafeAreaView>
   );

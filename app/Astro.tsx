@@ -18,12 +18,14 @@ function Astro(props: { weatherAPI: WeatherAPI | null }) {
 
     sunriseTittle: {
       color: 'white',
-      fontSize: 15
+      fontSize: 15,
+      opacity: 0.5,
+      paddingBottom: 5
     },
 
     sunset: {
       color: 'white',
-      fontSize: 10
+      fontSize: 15
 
     }
   });
