@@ -97,37 +97,30 @@ export default function Weather() {
     astro: {
       padding: 20,
       flexDirection: "row",
-      columnGap: 25,
+      columnGap: 20,
+      
     },
 
     wind: {
       padding: 20,
-      
     },
-    
-    uv: {
-      padding: 20,
-      flexDirection: "row",
-      columnGap: 30,
-    }
+
+
   });
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-
         <CurrentLocationWeatherComponent weatherAPI={weather} />
-      <ForecastHourComponent weatherAPI={weather} />
-      <View style={styles.astro}>
-        <Astro weatherAPI={weather} />
-      </View>
-      <View style={styles.wind}>
-        <Wind weatherAPI={weather} />
-      </View>
+        <ForecastHourComponent weatherAPI={weather} />
 
-      <View style={styles.uv}>
-        <UV weatherAPI={weather}/>
-      </View>
-      
+        <View style={styles.astro}>
+          <Astro weatherAPI={weather} />
+          <UV weatherAPI={weather} />
+        </View>
+
+        <View style={styles.wind}>
+          <Wind weatherAPI={weather} />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

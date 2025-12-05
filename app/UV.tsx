@@ -5,7 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 function UV(props: { weatherAPI: WeatherAPI | null }) {
   const screenWidth = Dimensions.get("window").width;
-  const calculatedWidth = screenWidth * 0.5 - 10;
+  const calculatedWidth = screenWidth * 0.5 - 37.5;
 
   const scaleUV = (index: number | undefined) => {
     if (index === undefined) {

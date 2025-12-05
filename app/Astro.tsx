@@ -2,7 +2,7 @@ import { View, Text, ScrollView, StyleSheet, Dimensions } from "react-native";
 import { WeatherAPI } from "./type";
 function Astro(props: { weatherAPI: WeatherAPI | null }) {
   const screenWidth = Dimensions.get("window").width;
-  const calculatedWidth = screenWidth * 0.5 - 10;
+  const calculatedWidth = screenWidth * 0.5 - 37.5;
   const styles = StyleSheet.create({
     container: {
       flexBasis: calculatedWidth,
