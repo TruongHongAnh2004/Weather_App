@@ -6,12 +6,13 @@ import CurrentLocationWeatherComponent from "./CurrentLocationWeatherComponent";
 import ForecastHourComponent from "./ForecastHourComponent";
 import Astro from "./Astro";
 import Wind from "./Wind";
+import UV from "./UV";
 export default function Weather() {
   const [weather, setWeather] = useState<WeatherAPI | null>(null);
   const [backgroundColor, setBackgroundColor] = useState<string | null>(null);
   useEffect(() => {
     fetch(
-      "https://api.weatherapi.com/v1/forecast.json?key=bcee342ca3ac483a962151415252111&q=Ho Chi Minh"
+      "https://api.weatherapi.com/v1/forecast.json?key=bcee342ca3ac483a962151415252111&q=Ho Chi Minh&lang=vi"
     )
       .then((res) => res.json())
       .then((data) => {
@@ -29,6 +30,7 @@ export default function Weather() {
           windKph: Number(data.current.wind_kph),
           windDir: String(data.current.wind_dir),
           windDegree: Number(data.current.wind_degree),
+          uv: Number(data.current.uv),
           forecast: data.forecast.forecastday[0].hour.map(function (hour: any) {
             return {
               time: hour.time.slice(11),
@@ -101,11 +103,19 @@ export default function Weather() {
     wind: {
       padding: 20,
       
+    },
+    
+    uv: {
+      padding: 20,
+      flexDirection: "row",
+      columnGap: 30,
     }
   });
   return (
     <SafeAreaView style={styles.container}>
-      <CurrentLocationWeatherComponent weatherAPI={weather} />
+      <ScrollView>
+
+        <CurrentLocationWeatherComponent weatherAPI={weather} />
       <ForecastHourComponent weatherAPI={weather} />
       <View style={styles.astro}>
         <Astro weatherAPI={weather} />
@@ -113,6 +123,12 @@ export default function Weather() {
       <View style={styles.wind}>
         <Wind weatherAPI={weather} />
       </View>
+
+      <View style={styles.uv}>
+        <UV weatherAPI={weather}/>
+      </View>
+      
+      </ScrollView>
     </SafeAreaView>
   );
 }

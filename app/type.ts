@@ -12,6 +12,7 @@ export interface WeatherAPI {
     windKph: number,
     windDir: string, 
     windDegree: number,
+    uv: number,
     forecast: Forecast[]    
 }
 
