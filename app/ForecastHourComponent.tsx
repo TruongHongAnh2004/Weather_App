@@ -3,13 +3,9 @@ import { WeatherAPI } from "./type";
 import ForecastItemHourComponent from "./ForecastHourItemComponent";
 function ForecastHourComponent(props: { weatherAPI: WeatherAPI | null }) {
   return (
-    <View style={styles.parentContainer}> 
+    <View style={styles.parentContainer}>
       <Text style={styles.textColor}>Dự báo thời tiết hôm nay</Text>
-      <ScrollView
-        contentContainerStyle={styles.container}
-        // style={styles.parentContainer}
-      >
-        
+      <ScrollView horizontal={true} contentContainerStyle={styles.container}>
         {props.weatherAPI?.forecast.map((fhour, i) => (
           <ForecastItemHourComponent key={i} forecast={fhour} />
         ))}
@@ -19,11 +15,7 @@ function ForecastHourComponent(props: { weatherAPI: WeatherAPI | null }) {
 }
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
     columnGap: 25,
-    overflowY: "hidden",
-    width: "100%",
-    
   },
 
   parentContainer: {
@@ -31,18 +23,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 20,
     margin: 20,
-
   },
 
   textColor: {
-    color: 'white',
+    color: "white",
     fontSize: 15,
     paddingBottom: 10,
     borderBottomWidth: 1,
-    borderBottomColor: 'white',
+    borderBottomColor: "white",
     marginBottom: 10,
-    
-  }
+  },
 });
 
 export default ForecastHourComponent;
