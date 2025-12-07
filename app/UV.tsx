@@ -2,10 +2,16 @@ import { Text, View, StyleSheet, Dimensions } from "react-native";
 import { WeatherAPI } from "./type";
 import Slider from "@react-native-community/slider";
 import { LinearGradient } from "expo-linear-gradient";
+import { useState } from "react";
 
 function UV(props: { weatherAPI: WeatherAPI | null }) {
   const screenWidth = Dimensions.get("window").width;
-  const calculatedWidth = screenWidth * 0.5 - 37.5;
+    const [calculatedWidth, setCalculatedWidth] = useState(screenWidth * 0.5 - 30);
+  
+    Dimensions.addEventListener("change", ({ window, screen }) => {
+      const { width, height } = window;
+      setCalculatedWidth(width * 0.5 - 30 )
+    });
 
   const scaleUV = (index: number | undefined) => {
     if (index === undefined) {
