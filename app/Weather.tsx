@@ -7,6 +7,10 @@ import ForecastHourComponent from "./ForecastHourComponent";
 import Astro from "./Astro";
 import Wind from "./Wind";
 import UV from "./UV";
+import Vision from "./Vision"
+import Precipitation from "./Precipitation"
+import Humidity from "./Humidity"
+import Pressure from "./Pressure"
 export default function Weather() {
   const [weather, setWeather] = useState<WeatherAPI | null>(null);
   const [backgroundColor, setBackgroundColor] = useState<string | null>(null);
@@ -31,6 +35,10 @@ export default function Weather() {
           windDir: String(data.current.wind_dir),
           windDegree: Number(data.current.wind_degree),
           uv: Number(data.current.uv),
+          visKm: Number(data.current.vis_km),
+          humidity: Number(data.current.humidity),
+          pressureMb: Number(data.current.pressure_mb),
+          precipMm: Number(data.current.precip_mm),
           forecast: data.forecast.forecastday[0].hour.map(function (hour: any) {
             return {
               time: hour.time.slice(11),
@@ -94,18 +102,15 @@ export default function Weather() {
         : backgroundColorTheme.sunny,
     },
 
-    astro: {
+    setRow: {
       padding: 20,
       flexDirection: "row",
       columnGap: 20,
-      
     },
 
     wind: {
       padding: 20,
     },
-
-
   });
   return (
     <SafeAreaView style={styles.container}>
@@ -113,13 +118,23 @@ export default function Weather() {
         <CurrentLocationWeatherComponent weatherAPI={weather} />
         <ForecastHourComponent weatherAPI={weather} />
 
-        <View style={styles.astro}>
+        <View style={styles.setRow}>
           <Astro weatherAPI={weather} />
           <UV weatherAPI={weather} />
         </View>
 
         <View style={styles.wind}>
           <Wind weatherAPI={weather} />
+        </View>
+
+        <View style={styles.setRow}>
+          <Vision weatherAPI={weather} />
+          <Precipitation weatherAPI={weather} />
+        </View>
+
+        <View style={styles.setRow}>
+          <Humidity weatherAPI={weather} />
+          <Pressure weatherAPI={weather} />
         </View>
       </ScrollView>
     </SafeAreaView>

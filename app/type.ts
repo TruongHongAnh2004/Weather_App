@@ -13,6 +13,10 @@ export interface WeatherAPI {
     windDir: string, 
     windDegree: number,
     uv: number,
+    visKm: number,
+    humidity: number,
+    pressureMb: number,
+    precipMm: number,
     forecast: Forecast[]    
 }
 
