@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import { WeatherAPI } from "./type";
@@ -7,11 +7,15 @@ import ForecastHourComponent from "./ForecastHourComponent";
 import Astro from "./Astro";
 import Wind from "./Wind";
 import UV from "./UV";
-import Vision from "./Vision"
-import Precipitation from "./Precipitation"
-import Humidity from "./Humidity"
-import Pressure from "./Pressure"
+import Vision from "./Vision";
+import Precipitation from "./Precipitation";
+import Humidity from "./Humidity";
+import Pressure from "./Pressure";
+import { Link } from "@react-navigation/native";
+import { Button } from "@react-navigation/elements";
+import { useRouter } from "expo-router";
 export default function Weather() {
+  const router = useRouter();
   const [weather, setWeather] = useState<WeatherAPI | null>(null);
   const [backgroundColor, setBackgroundColor] = useState<string | null>(null);
   useEffect(() => {
@@ -111,11 +115,30 @@ export default function Weather() {
     wind: {
       padding: 20,
     },
+    search: {
+      textAlign: "right",
+      color: "white",
+      fontSize: 20,
+    },
+    cellSearch: {
+      width: "fit-content",
+    }
   });
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
+        <View style={{flexDirection: "row-reverse"}}>
+          {/* <Link href= "./search-screen" style={styles.search}>Tìm kiếm </Link> */}
+          <TouchableOpacity style= {styles.cellSearch}
+            title="Search"
+            onPress={() => router.navigate("/search-screen")}
+          >
+            <Text style={styles.search}>Tìm kiếm</Text>
+          </TouchableOpacity>
+        </View>
+
         <CurrentLocationWeatherComponent weatherAPI={weather} />
+
         <ForecastHourComponent weatherAPI={weather} />
 
         <View style={styles.setRow}>
