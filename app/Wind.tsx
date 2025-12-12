@@ -40,7 +40,8 @@ function Wind(props: { weatherAPI: WeatherAPI | null }) {
 
       <View style={[styles.childContainer, styles.line]}>
         <Text style={styles.windText}>Gió</Text>
-        <Text style={styles.windText}>{props.weatherAPI?.windMph} km/h</Text>
+        <Text style={styles.windText}>
+          {props.weatherAPI?.windMph} km/h</Text>
       </View>
 
       <View style={[styles.childContainer, styles.line]}>
