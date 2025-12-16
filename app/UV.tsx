@@ -13,15 +13,15 @@ function UV(props: { weatherAPI: WeatherAPI | null }) {
     }
 
     if (index <= 2) {
-      return "Low";
+      return "Thấp";
     } else if (index <= 5) {
-      return "Moderate";
+      return "Vừa phải";
     } else if (index <= 7) {
-      return "High";
+      return "Cao";
     } else if (index <= 10) {
-      return "Very High";
+      return "Rất cao";
     } else {
-      return "Extremely";
+      return "Cực cao";
     }
   };
 
