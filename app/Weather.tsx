@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import { WeatherAPI } from "./type";
@@ -13,11 +19,93 @@ import Humidity from "./Humidity";
 import Pressure from "./Pressure";
 import { Link } from "@react-navigation/native";
 import { Button } from "@react-navigation/elements";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 export default function Weather() {
+  const { post } = useLocalSearchParams();
+
   const router = useRouter();
+
   const [weather, setWeather] = useState<WeatherAPI | null>(null);
+
   const [backgroundColor, setBackgroundColor] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (post) {
+      fetch(
+        "https://api.weatherapi.com/v1/forecast.json?key=bcee342ca3ac483a962151415252111&q=" +
+          post +
+          "&lang=vi"
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setWeather({
+            name: String(data.location.name),
+            tempC: Number(data.current.temp_c),
+            text: String(data.current.condition.text),
+            icon: String(data.current.condition.icon),
+            last_updated: String(data.current.last_updated.slice(0, 10)),
+            sunrise: String(data.forecast.forecastday[0].astro.sunrise),
+            sunset: String(data.forecast.forecastday[0].astro.sunset),
+            moonrise: String(data.forecast.forecastday[0].astro.moonrise),
+            moon_phase: String(data.forecast.forecastday[0].astro.moon_phase),
+            windMph: Number(data.current.wind_mph),
+            windKph: Number(data.current.wind_kph),
+            windDir: String(data.current.wind_dir),
+            windDegree: Number(data.current.wind_degree),
+            uv: Number(data.current.uv),
+            visKm: Number(data.current.vis_km),
+            humidity: Number(data.current.humidity),
+            pressureMb: Number(data.current.pressure_mb),
+            precipMm: Number(data.current.precip_mm),
+            forecast: data.forecast.forecastday[0].hour.map(function (
+              hour: any
+            ) {
+              return {
+                time: hour.time.slice(11),
+                tempC: hour.temp_c,
+                text: hour.condition.text,
+                icon: hour.condition.icon,
+              };
+            }),
+          });
+
+          switch (String(data.current.condition.text)) {
+            case "Sunny":
+              setBackgroundColor(backgroundColorTheme.sunny);
+              break;
+            case "Overcast":
+              setBackgroundColor(backgroundColorTheme.cloudy);
+              break;
+            case "Patchy rain possible":
+            case "Moderate rain at times":
+            case "Heavy rain at times":
+            case "Light rain shower":
+            case "Moderate or heavy rain shower":
+            case "Torrential rain shower":
+            case "Patchy light rain with thunder":
+            case "Moderate or heavy rain with thunder":
+              setBackgroundColor(backgroundColorTheme.rainy);
+              break;
+            case "Mist":
+            case "Fog":
+            case "Freezing fog":
+              setBackgroundColor(backgroundColorTheme.fog);
+              break;
+            case "Thundery outbreaks possible":
+              setBackgroundColor(backgroundColorTheme.storm);
+              break;
+            case "Clear":
+            case "Partly Cloudy":
+            case "Cloudy":
+              setBackgroundColor(backgroundColorTheme.night);
+              break;
+            default:
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [post]);
+
   useEffect(() => {
     fetch(
       "https://api.weatherapi.com/v1/forecast.json?key=bcee342ca3ac483a962151415252111&q=Ho Chi Minh&lang=vi"
@@ -122,14 +210,15 @@ export default function Weather() {
     },
     cellSearch: {
       width: "fit-content",
-    }
+    },
   });
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <View style={{flexDirection: "row-reverse"}}>
+        <View style={{ flexDirection: "row-reverse" }}>
           {/* <Link href= "./search-screen" style={styles.search}>Tìm kiếm </Link> */}
-          <TouchableOpacity style= {styles.cellSearch}
+          <TouchableOpacity
+            style={styles.cellSearch}
             title="Search"
             onPress={() => router.navigate("/search-screen")}
           >

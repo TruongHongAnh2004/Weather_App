@@ -1,39 +1,28 @@
 import { Button, Text } from "@react-navigation/elements";
 import { Stack, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SearchResult } from "./type";
+import searchItemComponent from "./SearchItemComponent";
+import SearchItemComponent from "./SearchItemComponent";
 
 export default function SearchScreen() {
   const router = useRouter();
   const [text, setText] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
-  const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
-  useEffect(() => {
-    fetch(
-      "https://api.weatherapi.com/v1/search.json?key=bcee342ca3ac483a962151415252111&q=Hong&lang=vi"
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setSearchResult({
-          id: Number(data.id),
-          name: String(data.name),
-          region: String(data.region),
-          country: String(data.country),
-          lat: Number(data.lat),
-          lon: Number(data.lon),
-          url: String(data.url),
-        });
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const [searchResult, setSearchResult] = useState<SearchResult[]>([]);
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: "center",
-      
       padding: 20,
       margin: 50,
       flexDirection: "row",
@@ -49,18 +38,59 @@ export default function SearchScreen() {
     cancel: {
       fontSize: 20,
     },
+
+    listSearch: {},
   });
+
+  const textUser = (text: string) => {
+    setText(text);
+
+    if (text == "") {
+      setSearchResult([]);
+    } else {
+      fetch(
+        "https://api.weatherapi.com/v1/search.json?key=bcee342ca3ac483a962151415252111&q=" +
+          text +
+          "&lang=vi"
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setSearchResult(
+            data.map(function (searchElement: any) {
+              return {
+                id: Number(searchElement.id),
+                name: String(searchElement.name),
+                region: String(searchElement.region),
+                country: String(searchElement.country),
+                lat: Number(searchElement.lat),
+                lon: Number(searchElement.lon),
+                url: String(searchElement.url),
+              };
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        onChangeText={setText}
+        onChangeText={textUser}
         value={text}
         placeholder="Tìm tên thành phố"
       />
-      <TouchableOpacity onPress={() => setModalVisible(false)}>
+
+      <TouchableOpacity onPress={() => router.back()}>
         <Text style={styles.cancel}>Hủy</Text>
       </TouchableOpacity>
+
+      <ScrollView style={styles.listSearch}>
+        {searchResult.map(function (searchI, i) {
+          return <SearchItemComponent key={i} searchResult={searchI} />;
+        })}
+      </ScrollView>
     </View>
   );
 }
