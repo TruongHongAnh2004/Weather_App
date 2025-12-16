@@ -20,6 +20,8 @@ import Pressure from "./Pressure";
 import { Link } from "@react-navigation/native";
 import { Button } from "@react-navigation/elements";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { Foundation, Ionicons } from '@expo/vector-icons'; 
+
 export default function Weather() {
   const { post } = useLocalSearchParams();
 
@@ -203,14 +205,18 @@ export default function Weather() {
     wind: {
       padding: 20,
     },
+
     search: {
       textAlign: "right",
       color: "white",
       fontSize: 20,
     },
+
     cellSearch: {
       width: "fit-content",
+      padding: 20,
     },
+    
   });
   return (
     <SafeAreaView style={styles.container}>
@@ -222,7 +228,9 @@ export default function Weather() {
             title="Search"
             onPress={() => router.navigate("/search-screen")}
           >
-            <Text style={styles.search}>Tìm kiếm</Text>
+            
+            <Foundation name="magnifying-glass" size={30} color="white" />
+
           </TouchableOpacity>
         </View>
 

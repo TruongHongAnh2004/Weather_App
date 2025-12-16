@@ -16,6 +16,7 @@ function SearchItemComponent(props: { searchResult: SearchResult }) {
 const styles = StyleSheet.create({
   fontColor: {
     fontSize: 20,
+    paddingBottom: 20,
   },
 });
 

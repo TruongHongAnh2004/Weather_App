@@ -24,22 +24,32 @@ export default function SearchScreen() {
       flex: 1,
       justifyContent: "center",
       padding: 20,
-      margin: 50,
       flexDirection: "row",
       columnGap: 20,
+      flexWrap: "wrap",
+      marginBottom: 50,
+      marginTop: 50
     },
     input: {
+      flex: 1,
       height: 40,
       borderColor: "gray",
       borderWidth: 1,
       paddingHorizontal: 10,
-      marginBottom: 10,
+      borderRadius: 10,
+
     },
     cancel: {
       fontSize: 20,
+      
     },
 
-    listSearch: {},
+    listSearch: {
+      paddingLeft: 20,
+    },
+    parentCancel: {
+      justifyContent: "center"
+    }
   });
 
   const textUser = (text: string) => {
@@ -74,19 +84,21 @@ export default function SearchScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        onChangeText={textUser}
-        value={text}
-        placeholder="Tìm tên thành phố"
-      />
+    <View>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          onChangeText={textUser}
+          value={text}
+          placeholder="Tìm tên thành phố"
+        />
 
-      <TouchableOpacity onPress={() => router.back()}>
-        <Text style={styles.cancel}>Hủy</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.parentCancel} onPress={() => router.back()}>
+          <Text style={styles.cancel}>Hủy</Text>
+        </TouchableOpacity>
+      </View>
 
-      <ScrollView style={styles.listSearch}>
+      <ScrollView contentContainerStyle={styles.listSearch}>
         {searchResult.map(function (searchI, i) {
           return <SearchItemComponent key={i} searchResult={searchI} />;
         })}
